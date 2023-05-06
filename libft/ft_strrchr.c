@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_write.c                                         :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ggiboury <ggiboury@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 23:19:10 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/05/04 14:50:41 by ggiboury         ###   ########.fr       */
+/*   Created: 2022/11/01 04:07:39 by ggiboury          #+#    #+#             */
+/*   Updated: 2022/11/14 17:43:45 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-
-void	write_error(char *msg)
+char	*ft_strrchr(const char *s, int c)
 {
-	write(2, msg, get_str_len(msg));
-}
+	char	*occur;
+	int		ct;
 
-int	print_error(char *str)
-{
-	if (str != NULL)
-		perror("");
-	else
-		ft_printf("");
-	exit(EXIT_FAILURE);
+	ct = -1;
+	occur = (void *) 0;
+	while (s[++ct])
+		if (s[ct] == (char) c)
+			occur = (char *)(s + ct);
+	if (s[ct] == (char) c)
+		return ((char *)(s + ct));
+	return (occur);
 }

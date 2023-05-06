@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_write.c                                         :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ggiboury <ggiboury@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 23:19:10 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/05/04 14:50:41 by ggiboury         ###   ########.fr       */
+/*   Created: 2022/11/14 21:31:40 by ggiboury          #+#    #+#             */
+/*   Updated: 2022/11/15 17:21:58 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "pipex.h"
-
-void	write_error(char *msg)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	write(2, msg, get_str_len(msg));
-}
-
-int	print_error(char *str)
-{
-	if (str != NULL)
-		perror("");
-	else
-		ft_printf("");
-	exit(EXIT_FAILURE);
+	if (lst == NULL)
+		return ;
+	while (lst->next != NULL)
+	{
+		f(lst->content);
+		lst = lst->next;
+	}
+	f(lst->content);
 }

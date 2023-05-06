@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_write.c                                         :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 23:19:10 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/05/04 14:50:41 by ggiboury         ###   ########.fr       */
+/*   Created: 2022/11/03 03:28:51 by ggiboury          #+#    #+#             */
+/*   Updated: 2023/01/31 21:41:47 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	write_error(char *msg)
+int	ft_putstr_fd(char *s, int fd)
 {
-	write(2, msg, get_str_len(msg));
-}
-
-int	print_error(char *str)
-{
-	if (str != NULL)
-		perror("");
-	else
-		ft_printf("");
-	exit(EXIT_FAILURE);
+	if (s != NULL)
+		return (write(fd, s, ft_strlen(s)));
+	return (-1);
 }

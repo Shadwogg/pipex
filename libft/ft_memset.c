@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_write.c                                         :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 23:19:10 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/05/04 14:50:41 by ggiboury         ###   ########.fr       */
+/*   Created: 2022/10/31 21:50:28 by ggiboury          #+#    #+#             */
+/*   Updated: 2023/01/31 22:08:30 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	write_error(char *msg)
+/**
+ * Fill the memory with the number given
+*/
+void	*ft_memset(void *s, int nb, size_t size)
 {
-	write(2, msg, get_str_len(msg));
-}
+	int		ct;
+	char	*string;
 
-int	print_error(char *str)
-{
-	if (str != NULL)
-		perror("");
-	else
-		ft_printf("");
-	exit(EXIT_FAILURE);
+	string = s;
+	ct = -1;
+	while (((size_t)(++ct)) < size)
+		string[ct] = (unsigned char) nb;
+	return (s);
 }

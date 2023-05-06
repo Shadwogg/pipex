@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_write.c                                         :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 23:19:10 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/05/04 14:50:41 by ggiboury         ###   ########.fr       */
+/*   Created: 2022/10/31 18:21:26 by ggiboury          #+#    #+#             */
+/*   Updated: 2023/01/31 22:06:50 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-
-void	write_error(char *msg)
+/**
+ * Test if the number is in the ASCII set
+*/
+int	ft_isascii(int x)
 {
-	write(2, msg, get_str_len(msg));
-}
-
-int	print_error(char *str)
-{
-	if (str != NULL)
-		perror("");
-	else
-		ft_printf("");
-	exit(EXIT_FAILURE);
+	return (x > -1 && x < 128);
 }

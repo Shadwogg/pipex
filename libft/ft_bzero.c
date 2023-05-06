@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_write.c                                         :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 23:19:10 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/05/04 14:50:41 by ggiboury         ###   ########.fr       */
+/*   Created: 2022/10/31 23:53:10 by ggiboury          #+#    #+#             */
+/*   Updated: 2023/01/31 22:08:54 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	write_error(char *msg)
+/**
+ * Set the space occupied by s to 0.
+*/
+void	ft_bzero(void *s, size_t n)
 {
-	write(2, msg, get_str_len(msg));
-}
+	char	*string;
+	size_t	ct;
 
-int	print_error(char *str)
-{
-	if (str != NULL)
-		perror("");
-	else
-		ft_printf("");
-	exit(EXIT_FAILURE);
+	string = (char *) s;
+	ct = 0;
+	while (ct < n)
+		string[ct++] = 0;
 }

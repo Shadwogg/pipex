@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_write.c                                         :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ggiboury <ggiboury@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 23:19:10 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/05/04 14:50:41 by ggiboury         ###   ########.fr       */
+/*   Created: 2022/11/09 21:11:24 by ggiboury          #+#    #+#             */
+/*   Updated: 2022/11/16 18:14:48 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "pipex.h"
-
-void	write_error(char *msg)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	write(2, msg, get_str_len(msg));
-}
+	unsigned int	ct;
+	unsigned int	size;
 
-int	print_error(char *str)
-{
-	if (str != NULL)
-		perror("");
-	else
-		ft_printf("");
-	exit(EXIT_FAILURE);
+	if (s == NULL)
+		return ;
+	ct = 0;
+	size = (unsigned int) ft_strlen(s);
+	while (ct < size)
+	{
+		f(ct, s + ct);
+		ct++;
+	}
 }

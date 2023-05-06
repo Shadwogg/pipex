@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:28:39 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/02/27 14:26:49 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:39:45 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ int	main(int argc, char **argv, char **env)
 	int		**pipes;
 	t_cmd	**cmds;
 
-	// To do : fonction pipex, et bonus
-	// Puis relecture complete
 	if (argc != 5)
 	{
 		write_error("Usage : ./pipex <infile> <cmd 1> <cmd 2> <outfile>.\n");

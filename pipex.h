@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:28:34 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/02/25 18:16:17 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:57:16 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_cmd	**init_cmd(char **argv, int size, int in, int out);
 int		**init_pipes(int size, int in, int out);
 int		init_proc(t_proc *proc, t_cmd *cmd, int **pipe, int p);
 int		pipex_preparse(int argc, char **argv, int *in, int *out);
-int		print_error(void);
+int		print_error(char *str);
 int		get_tab_len(char **param);
 int		set_cmd(t_cmd *cmd, char **env);
 char	**ft_split(char *s, char del);

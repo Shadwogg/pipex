@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_write.c                                         :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ggiboury <ggiboury@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 23:19:10 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/05/04 14:50:41 by ggiboury         ###   ########.fr       */
+/*   Created: 2022/11/02 18:22:37 by ggiboury          #+#    #+#             */
+/*   Updated: 2022/11/16 17:58:21 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "pipex.h"
-
-void	write_error(char *msg)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	write(2, msg, get_str_len(msg));
-}
+	size_t	ct;
 
-int	print_error(char *str)
-{
-	if (str != NULL)
-		perror("");
-	else
-		ft_printf("");
-	exit(EXIT_FAILURE);
+	ct = 0;
+	while (ct < n)
+		if (((unsigned char *) s)[ct++] == (unsigned char) c)
+			return (((unsigned char *) s) + --ct);
+	return ((void *)0);
 }
