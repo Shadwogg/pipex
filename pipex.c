@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:28:39 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/05 13:52:01 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:42:49 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ int	close_all(int **pipes)
 
 	ct = 0;
 	err = 0;
-	while (pipes[ct])
+	while (pipes[ct + 1])
 	{
-		err |= close(pipes[ct][0]);
+		err = close(pipes[ct][0]);
 		if (err == -1)
-			print_error("Failed to close pipes", "");
-		err |= close(pipes[ct][1]);
+			print_error("Failed to close input side from a pipe", "");
+		err = close(pipes[ct][1]);
+		if (err == -1)
+			print_error("Failed to close output side from a pipe", "");
 		ct++;
 	}
 	return (err);
@@ -42,9 +44,9 @@ int	close_pipes(t_cmd *cmd, int **pipes)
 	while (pipes[ct + 2])
 	{
 		if (pipes[ct][0] != cmd->in)
-			err |= close(pipes[ct][0]);
+			err = close(pipes[ct][0]);
 		if (pipes[ct][1] != cmd->out)
-			err |= err | close(pipes[ct][1]);
+			err = close(pipes[ct][1]);
 		if (err != 0)
 			return (-1);
 		ct++;
@@ -52,7 +54,7 @@ int	close_pipes(t_cmd *cmd, int **pipes)
 	if (pipes[ct][0] != cmd->in)
 		err = close(pipes[ct][0]);
 	if (pipes[ct][1] != cmd->out)
-		err = err | close(pipes[ct][1]);
+		err = close(pipes[ct][1]);
 	return (1);
 }
 
@@ -65,16 +67,15 @@ int	wait_childs(int number)
 	err = 0;
 	while (number > 0)
 	{
-		err = (err << 1) | waitpid(-1, &status, WNOHANG);
-		//printf("err = %d errno = %d\n", err, errno);
-		/*if (err == -1)
+		err = waitpid(-1, &status, WNOHANG);
+		if (err == -1)
+			print_error("waitpid failed", "");
+		if (!WIFEXITED(status))
 		{
-			if (errno == ECHILD)
-				break ;
-			print_error("", "");
-		}*/
-		if (! WIFEXITED(status))
+			if (WEXITSTATUS(status) != 0)
+				exit(WEXITSTATUS(status));
 			print_error("child didnt quit normally\n", "");
+		}
 		number--;
 	}
 	return (err);
@@ -106,7 +107,7 @@ int	pipex(t_cmd **cmds, int **pipes, int argc, char **env)
 		}
 		ct--;
 	}
-	if (ct == 0)
+	if (ct == -1)
 		proc.cmd = NULL;
 	if (close_pipes(proc.cmd, pipes) == -1)
 		print_error("Error while closing pipes.\n", "");
@@ -132,7 +133,7 @@ int	main(int argc, char **argv, char **env)
 	pipes = init_pipes(argc - 4, in, out);
 	cmds = init_cmd(argv, argc - 3, in, out);
 	if (pipes == NULL || cmds == NULL)
-		print_error("Error while creating the pipes/while initializing cmds.", "");
+		print_error("Error while creating/initializing the pipes/cmds.", "");
 	if (pipex(cmds, pipes, argc - 3, env) == -1)
 		print_error("One command didn't properly executed.", "");
 	return (0);

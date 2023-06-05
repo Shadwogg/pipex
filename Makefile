@@ -6,7 +6,7 @@
 #    By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/05 17:28:42 by ggiboury          #+#    #+#              #
-#    Updated: 2023/06/05 13:52:44 by ggiboury         ###   ########.fr        #
+#    Updated: 2023/06/05 16:09:41 by ggiboury         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,8 +56,3 @@ fclean : clean
 	@/bin/rm -rf $(LIBFT_FILE)
 
 re : fclean $(NAME)
-
-test : re
-	@echo "salut les amis\n c tre le test" > intest
-	./pipex intest "ls" "wc -c" outtest
-#	./pipex intest "grep salut" "wc -w" outtest

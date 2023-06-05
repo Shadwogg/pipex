@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:13:00 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/05 11:47:45 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:09:27 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 int	exec_cmd(t_cmd *cmd, char **env)
 {
+	errno = 0;
 	if (set_cmd(cmd, env) == -1)
-		print_error("command not found\n", "");
+	{
+		ft_putstr_fd("command not found\n", 2);
+		exit(127);
+	}
 	if (dup2(cmd->in, 0) == -1)
 		print_error("", "dup2(in) failed");
 	if (dup2(cmd->out, 1) == -1)
 		print_error("", "dup2(out) failed");
 	execve(cmd->option[0], cmd->option, env);
-	perror(cmd->option[0]);
+	perror(ft_strjoin(cmd->option[0], cmd->option[1]));
 	return (-1);
 }

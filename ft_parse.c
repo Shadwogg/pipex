@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 18:54:12 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/05 12:24:31 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:41:26 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,15 @@ int	init_proc(t_proc *proc, t_cmd *cmd, int **pipe, int p)
 /**
  * Set p to the file descriptor corresponding to the file if we can read from it.
 */
-int	ft_open(char *file_in, int *p)
+int	ft_open(char *file_in, int *fd)
 {
 	if (file_in == NULL || access(file_in, R_OK) == -1)
 	{
 		perror(file_in);
 		exit(EXIT_FAILURE);
 	}
-	*p = open(file_in, O_RDONLY | O_CLOEXEC);
-	if (*p == -1)
+	*fd = open(file_in, O_RDONLY | O_CLOEXEC);
+	if (*fd == -1)
 	{
 		perror(file_in);
 		exit(EXIT_FAILURE);
@@ -120,16 +120,11 @@ int	pipex_preparse(int argc, char **argv, int *in, int *out)
 	if (!access(argv[argc - 1], F_OK))
 		if (unlink(argv[argc - 1]) != 0)
 			print_error("", "unlink error");
-	errno = 0;
-	*out = open(argv[argc - 1], O_CREAT | O_RDWR,
+	*out = open(argv[argc - 1], O_CREAT | O_RDWR | O_CLOEXEC,
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (*out == -1)
 		print_error("", "open error");
-	if (ft_open(argv[1], in) == -1)
-	{
-		perror(argv[1]);
-		exit(EXIT_FAILURE);
-	}
+	ft_open(argv[1], in);
 	errno = 0;
 	return (1);
 }

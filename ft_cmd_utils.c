@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:05:03 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/02/27 14:05:14 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:00:23 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int	set_cmd(t_cmd *cmd, char **env)
 	int		ct;
 	char	*tofree;
 
-	ct = 0;
+	ct = -1;
 	path = init_path(env);
-	while (path[ct] != NULL)
+	while (path[++ct] != NULL)
 	{
 		tofree = ft_append(path[ct], "/", 0);
 		cur = ft_append(tofree, cmd->option[0], 0);
@@ -75,7 +75,6 @@ int	set_cmd(t_cmd *cmd, char **env)
 		}
 		free(cur);
 		errno = 0;
-		ct++;
 	}
 	free_tab_str(path);
 	if (access(cmd->option[0], X_OK) == 0)
