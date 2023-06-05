@@ -6,11 +6,29 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:28:39 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/05/03 16:39:45 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/05 13:52:01 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	close_all(int **pipes)
+{
+	int	ct;
+	int	err;
+
+	ct = 0;
+	err = 0;
+	while (pipes[ct])
+	{
+		err |= close(pipes[ct][0]);
+		if (err == -1)
+			print_error("Failed to close pipes", "");
+		err |= close(pipes[ct][1]);
+		ct++;
+	}
+	return (err);
+}
 
 int	close_pipes(t_cmd *cmd, int **pipes)
 {
@@ -19,6 +37,8 @@ int	close_pipes(t_cmd *cmd, int **pipes)
 
 	ct = 0;
 	err = 0;
+	if (cmd == NULL)
+		return (close_all(pipes));
 	while (pipes[ct + 2])
 	{
 		if (pipes[ct][0] != cmd->in)
@@ -36,30 +56,28 @@ int	close_pipes(t_cmd *cmd, int **pipes)
 	return (1);
 }
 
-int	wait_childs(int *childs, int *status)
+int	wait_childs(int number)
 {
-	int	ct;
 	int	err;
+	int	status;
 
-	ct = 0;
-	while (childs[ct] != -1)
+	status = 0;
+	err = 0;
+	while (number > 0)
 	{
-		err = waitpid(-childs[ct], status, 0);
-		if (err == -1)
+		err = (err << 1) | waitpid(-1, &status, WNOHANG);
+		//printf("err = %d errno = %d\n", err, errno);
+		/*if (err == -1)
 		{
 			if (errno == ECHILD)
 				break ;
-			print_error();
-		}
-		if (! WIFEXITED(*status))
-		{
-			write_error("err\n");
-			exit(EXIT_FAILURE);
-		}
-		ct++;
+			print_error("", "");
+		}*/
+		if (! WIFEXITED(status))
+			print_error("child didnt quit normally\n", "");
+		number--;
 	}
-	free(childs);
-	return (1);
+	return (err);
 }
 
 /// @brief The core of the program.
@@ -71,35 +89,30 @@ int	wait_childs(int *childs, int *status)
 /// @param env The array having environment variables
 int	pipex(t_cmd **cmds, int **pipes, int argc, char **env)
 {
-	int		*childs;
+	int		ct;
 	t_proc	proc;
 
-	childs = malloc((argc + 1) * sizeof(int));
-	if (childs == NULL)
-		return (-1);
-	childs[argc--] = -1;
-	while (argc >= 0)
+	ct = argc;
+	while (ct >= 0)
 	{
 		proc.pid = fork();
-		childs[argc] = proc.pid;
 		if (proc.pid == -1)
 			return (-1);
 		errno = 0;
 		if (proc.pid == 0)
 		{
-			init_proc(&proc, cmds[argc], pipes, argc);
+			init_proc(&proc, cmds[ct], pipes, ct);
 			break ;
 		}
-		argc--;
+		ct--;
 	}
+	if (ct == 0)
+		proc.cmd = NULL;
+	if (close_pipes(proc.cmd, pipes) == -1)
+		print_error("Error while closing pipes.\n", "");
 	if (proc.pid == 0)
-	{
-		close_pipes(proc.cmd, pipes);
-		if (errno != 0)
-			exit(EXIT_FAILURE);
 		exec_cmd(proc.cmd, env);
-	}
-	return (wait_childs(childs, &(proc.status)));
+	return (wait_childs(argc));
 }
 
 int	main(int argc, char **argv, char **env)
@@ -111,7 +124,7 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc != 5)
 	{
-		write_error("Usage : ./pipex <infile> <cmd 1> <cmd 2> <outfile>.\n");
+		ft_putstr_fd("Usage : ./pipex <infile> <cmd 1> <cmd 2> <outfile>.\n", 1);
 		return (1);
 	}
 	if (pipex_preparse(argc, argv, &in, &out) == -1)
@@ -119,8 +132,8 @@ int	main(int argc, char **argv, char **env)
 	pipes = init_pipes(argc - 4, in, out);
 	cmds = init_cmd(argv, argc - 3, in, out);
 	if (pipes == NULL || cmds == NULL)
-		print_error();
+		print_error("Error while creating the pipes/while initializing cmds.", "");
 	if (pipex(cmds, pipes, argc - 3, env) == -1)
-		print_error();
+		print_error("One command didn't properly executed.", "");
 	return (0);
 }

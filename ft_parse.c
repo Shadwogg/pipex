@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 18:54:12 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/02/25 20:43:13 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/05 12:24:31 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	**init_pipes(int size, int in, int out)
 
 	pipes = malloc((size + 2) * sizeof(int *));
 	if (pipes == NULL)
-		print_error();
+		print_error("", "Malloc error");
 	pipes[size + 1] = NULL;
 	ct = 0;
 	while (ct < size)
@@ -75,7 +75,6 @@ int	**init_pipes(int size, int in, int out)
 	return (pipes);
 }
 
-// IL RESTE LE P A GERER
 int	init_proc(t_proc *proc, t_cmd *cmd, int **pipe, int p)
 {
 	proc->cmd = cmd;
@@ -120,15 +119,17 @@ int	pipex_preparse(int argc, char **argv, int *in, int *out)
 {
 	if (!access(argv[argc - 1], F_OK))
 		if (unlink(argv[argc - 1]) != 0)
-			print_error();
+			print_error("", "unlink error");
+	errno = 0;
 	*out = open(argv[argc - 1], O_CREAT | O_RDWR,
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (*out == -1)
-		print_error();
+		print_error("", "open error");
 	if (ft_open(argv[1], in) == -1)
 	{
 		perror(argv[1]);
 		exit(EXIT_FAILURE);
 	}
+	errno = 0;
 	return (1);
 }

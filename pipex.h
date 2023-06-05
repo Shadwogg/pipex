@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:28:34 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/05/04 14:57:16 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/05 11:43:23 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <errno.h>
+# include "libft/libft.h"
 
 //# include "get_next_line.h"
 
@@ -59,12 +60,10 @@ t_cmd	**init_cmd(char **argv, int size, int in, int out);
 int		**init_pipes(int size, int in, int out);
 int		init_proc(t_proc *proc, t_cmd *cmd, int **pipe, int p);
 int		pipex_preparse(int argc, char **argv, int *in, int *out);
-int		print_error(char *str);
+int		print_error(char *desc, char *err);
 int		get_tab_len(char **param);
 int		set_cmd(t_cmd *cmd, char **env);
-char	**ft_split(char *s, char del);
 int		get_str_len(char *str);
-void	write_error(char *msg);
 
 void	ft_print_tab(t_cmd **cmd);
 

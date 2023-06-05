@@ -6,7 +6,7 @@
 #    By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/05 17:28:42 by ggiboury          #+#    #+#              #
-#    Updated: 2023/05/06 20:42:29 by ggiboury         ###   ########.fr        #
+#    Updated: 2023/06/05 13:52:44 by ggiboury         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,13 @@ SRC = pipex.c					\
 		ft_exec.c				\
 		ft_free.c				\
 		ft_parse.c				\
-		ft_split.c				\
 		ft_str_utils.c			\
 		ft_write.c				\
 
 LIBFT_DIR = libft
 LIBFT_FILE = ./libft.a
 
+LIB = $(LIBFT_FILE)
 FLAGS = -Wall -Werror -Wextra
 
 NC=\033[0m
@@ -44,7 +44,7 @@ lib :
 	fi
 
 $(NAME) : lib
-	@gcc -Wall -Werror -Wextra $(SRC) -o $(NAME)
+	@gcc -Wall -Werror -Wextra $(SRC) -o $(NAME) $(LIB)
 	@echo "$(GREEN)pipex ready to be executed.$(NC)"
 
 clean :
