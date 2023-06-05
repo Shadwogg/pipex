@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:28:34 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/05 17:32:16 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:36:17 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <unistd.h>
 # include <errno.h>
 # include "libft/libft.h"
-
 
 /* 
  * s_cmd stores everything we need to know to execute a command.
