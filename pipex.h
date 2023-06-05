@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:28:34 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/05 11:43:23 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:32:16 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <errno.h>
 # include "libft/libft.h"
 
-//# include "get_next_line.h"
 
 /* 
  * s_cmd stores everything we need to know to execute a command.
@@ -50,7 +49,10 @@ typedef struct s_proc{
 	struct s_cmd	*cmd;
 }	t_proc;
 
+int		close_all(int **pipes);
+int		close_pipes(t_cmd *cmd, int **pipes);
 char	*ft_append(char *s1, char *s2, char sep);
+int		ft_open(char *file_in, int *fd);
 int		exec_cmd(t_cmd *cmd, char **env);
 char	**free_tab_str(char **tab);
 t_cmd	**free_cmds(t_cmd **tab);
@@ -59,12 +61,11 @@ int		**free_tab_pipes(int **tab, int size, int in, int out);
 t_cmd	**init_cmd(char **argv, int size, int in, int out);
 int		**init_pipes(int size, int in, int out);
 int		init_proc(t_proc *proc, t_cmd *cmd, int **pipe, int p);
+int		pipex(t_cmd **cmds, int **pipes, int argc, char **env);
 int		pipex_preparse(int argc, char **argv, int *in, int *out);
 int		print_error(char *desc, char *err);
 int		get_tab_len(char **param);
 int		set_cmd(t_cmd *cmd, char **env);
-int		get_str_len(char *str);
-
-void	ft_print_tab(t_cmd **cmd);
+int		wait_childs(int number);
 
 #endif

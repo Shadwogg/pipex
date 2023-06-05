@@ -6,21 +6,11 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 23:14:59 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/02/27 13:52:55 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:28:11 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-int	get_str_len(char *str)
-{
-	int	ct;
-
-	ct = 0;
-	while (str[ct++])
-		;
-	return (ct);
-}
 
 int	get_tab_len(char **param)
 {
@@ -40,7 +30,7 @@ char	*ft_append(char *s1, char *s2, char sep)
 	int		ct2;
 	char	*str;
 
-	str = malloc((get_str_len(s1) + get_str_len(s2) + 2) * sizeof(char));
+	str = malloc((ft_strlen(s1) + ft_strlen(s2) + 2) * sizeof(char));
 	if (str == NULL)
 		return (NULL);
 	ct = -1;
@@ -53,4 +43,13 @@ char	*ft_append(char *s1, char *s2, char sep)
 		str[ct + ct2] = s2[ct2];
 	str[ct + ct2] = 0;
 	return (str);
+}
+
+int	print_error(char *desc, char *err)
+{
+	if (desc != NULL)
+		ft_putstr_fd(desc, 2);
+	if (errno != 0)
+		perror(err);
+	exit(EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 #    By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/05 17:28:42 by ggiboury          #+#    #+#              #
-#    Updated: 2023/06/05 16:09:41 by ggiboury         ###   ########.fr        #
+#    Updated: 2023/06/05 17:28:45 by ggiboury         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,7 @@ SRC = pipex.c					\
 		ft_exec.c				\
 		ft_free.c				\
 		ft_parse.c				\
-		ft_str_utils.c			\
-		ft_write.c				\
+		ft_utils.c			
 
 LIBFT_DIR = libft
 LIBFT_FILE = ./libft.a
