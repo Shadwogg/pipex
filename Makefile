@@ -6,7 +6,7 @@
 #    By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/05 17:28:42 by ggiboury          #+#    #+#              #
-#    Updated: 2023/06/06 17:52:45 by ggiboury         ###   ########.fr        #
+#    Updated: 2023/06/06 18:35:19 by ggiboury         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,3 +71,5 @@ bonus : lib
 	@gcc $(FLAGS) $(SRC_BONUS) -o $(NAME_BONUS) $(LIB)
 	@echo "$(GREEN)pipex_bonus ready to be executed.$(NC)"
 
+test : re
+	./pipex a a a a

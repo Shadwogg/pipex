@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 18:54:12 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/06 17:58:16 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/06 18:36:41 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ t_cmd	**init_cmd(char **argv, int size, int in, int out)
 	if (cmds == NULL)
 		return (NULL);
 	cmds[size] = NULL;
-	ct = 0;
-	while (ct < size)
+	ct = -1;
+	while (++ct < size)
 	{
 		cmds[ct] = malloc(sizeof(t_cmd));
 		if (cmds[ct] == NULL)
 			return (free_cmds(cmds, ct));
 		cmds[ct]->out = -1;
-		cmds[ct++]->in = -1;
+		cmds[ct]->in = -1;
 		cmds[ct]->option = ft_split(argv[ct + 2], ' ');
 		if (cmds[ct]->option == NULL)
 		{
