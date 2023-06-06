@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 18:54:12 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/05 16:41:26 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:58:16 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,47 +32,19 @@ t_cmd	**init_cmd(char **argv, int size, int in, int out)
 	{
 		cmds[ct] = malloc(sizeof(t_cmd));
 		if (cmds[ct] == NULL)
-			return (free_cmds(cmds));
-		cmds[ct]->option = ft_split(argv[ct + 2], ' ');
-		if (cmds[ct]->option == NULL)
-			return (free_cmds(cmds));
+			return (free_cmds(cmds, ct));
 		cmds[ct]->out = -1;
 		cmds[ct++]->in = -1;
+		cmds[ct]->option = ft_split(argv[ct + 2], ' ');
+		if (cmds[ct]->option == NULL)
+		{
+			free(cmds[ct]);
+			return (free_cmds(cmds, ct));
+		}
 	}
 	cmds[0]->in = in;
 	cmds[ct - 1]->out = out;
 	return (cmds);
-}
-
-/**
- * Initiate all pipes we need to use for pipex.
- * Then add the file descriptors of the files used.
-*/
-int	**init_pipes(int size, int in, int out)
-{
-	int	**pipes;
-	int	ct;
-
-	pipes = malloc((size + 2) * sizeof(int *));
-	if (pipes == NULL)
-		print_error("", "Malloc error");
-	pipes[size + 1] = NULL;
-	ct = 0;
-	while (ct < size)
-	{
-		pipes[ct] = malloc(2 * sizeof(int));
-		if (pipes[ct] == NULL)
-			return (free_tab_pipes(pipes, ct, in, out));
-		if (pipe((pipes[ct])) == -1)
-			return (free_tab_pipes(pipes, ct, in, out));
-		ct++;
-	}
-	pipes[size] = malloc(2 * sizeof(int));
-	if (pipes[size] == NULL)
-		return (free_tab_pipes(pipes, ct, in, out));
-	pipes[size][0] = in;
-	pipes[size][1] = out;
-	return (pipes);
 }
 
 int	init_proc(t_proc *proc, t_cmd *cmd, int **pipe, int p)

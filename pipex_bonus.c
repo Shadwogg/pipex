@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 17:28:39 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/06 18:05:28 by ggiboury         ###   ########.fr       */
+/*   Created: 2023/06/06 17:05:45 by ggiboury          #+#    #+#             */
+/*   Updated: 2023/06/06 18:07:38 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 int	wait_childs(int number)
 {
@@ -34,6 +34,41 @@ int	wait_childs(int number)
 	}
 	return (err);
 }
+/*
+/// @brief The core of the program.
+/// Create each process used and give them their respective command.
+/// Then, launch each one.
+/// @param cmds The array of commands parsed.
+/// @param pipes The array of pipes used to transfer data.
+/// @param argc The number of commands
+/// @param env The array having environment variables
+int	pipex_bonus(t_cmd **cmds, int **pipes, int argc, char **env)
+{
+	int		ct;
+	t_proc	proc;
+
+	ct = argc;
+	while (ct >= 0)
+	{
+		proc.pid = fork();
+		if (proc.pid == -1)
+			return (-1);
+		errno = 0;
+		if (proc.pid == 0)
+		{
+			init_proc(&proc, cmds[ct], pipes, ct);
+			break ;
+		}
+		ct--;
+	}
+	if (ct == -1)
+		proc.cmd = NULL;
+	if (close_pipes(proc.cmd, pipes) == -1)
+		print_error("Error while closing pipes.\n", "");
+	if (proc.pid == 0)
+		exec_cmd(proc.cmd, env);
+	return (wait_childs(argc));
+}*/
 
 int	main(int argc, char **argv, char **env)
 {
@@ -42,8 +77,8 @@ int	main(int argc, char **argv, char **env)
 	int		**pipes;
 	t_cmd	**cmds;
 
-	if (argc != 5)
-		print_error("Usage : ./pipex infile cmd1 cmd2 outfile.\n", "");
+	if (argc < 5)
+		print_error("Usage : ./pipex infile cmd1 ... cmdx outfile.\n", "");
 	if (pipex_preparse(argc, argv, &in, &out) == -1)
 		print_error("Parsing failed.", "");
 	pipes = init_pipes(argc - 4, in, out);

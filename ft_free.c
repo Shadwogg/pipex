@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 23:09:41 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/05 16:04:07 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:35:19 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,16 @@
 /**
  * Free the array of the commands
 */
-t_cmd	**free_cmds(t_cmd **tab)
+t_cmd	**free_cmds(t_cmd **tab, int last)
 {
-	int	s;
-
-	s = 0;
-	while (tab + s != 0)
+	while (--last >= 0)
 	{
-		free_tab_str((*tab)->option);
-		free(tab + s++);
+		if (tab[last]->in != -1 && tab[last]->in != 0)
+			close(tab[last]->in);
+		if (tab[last]->out != -1 && tab[last]->out != 1)
+			close(tab[last]->out);
+		free_tab_str(tab[last]->option);
+		free(tab[last]);
 	}
 	free(tab);
 	return (NULL);
@@ -61,7 +62,7 @@ char	**free_tab_str(char **tab)
 /**
  * Free the array of pipes and close the fd used
 */
-int	**free_tab_pipes(int **tab, int size, int in, int out)
+int	**free_pipes(int **tab, int size, int in, int out)
 {
 	int	ct;
 

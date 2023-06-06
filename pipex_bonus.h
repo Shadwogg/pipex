@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 17:28:34 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/06 17:29:41 by ggiboury         ###   ########.fr       */
+/*   Created: 2023/06/06 17:18:47 by ggiboury          #+#    #+#             */
+/*   Updated: 2023/06/06 17:51:30 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include <fcntl.h>
 # include <stdio.h>
