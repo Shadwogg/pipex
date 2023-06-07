@@ -6,9 +6,11 @@
 #    By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/05 17:28:42 by ggiboury          #+#    #+#              #
-#    Updated: 2023/06/07 17:08:40 by ggiboury         ###   ########.fr        #
+#    Updated: 2023/06/07 22:43:23 by ggiboury         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+SHELL = /bin/sh
 
 NAME = pipex
 NAME_BONUS = pipex_bonus
@@ -39,6 +41,7 @@ LIBFT = ./libft.a
 
 LIB = $(LIBFT)
 FLAGS = -Wall -Werror -Wextra
+CC = gcc
 
 NC=\033[0m
 GREEN=\033[0;32m
@@ -51,34 +54,31 @@ all : $(NAME)
 lib : $(LIBFT)
 
 $(LIBFT) :
-	echo "Loading libft";\
-	make -C $(LIBFT_DIR);\
-	mv $(LIBFT_DIR)/libft.a $(LIBFT_FILE);\
+	@echo "Loading libft"
+	@make -C $(LIBFT_DIR)
+	@mv $(LIBFT_DIR)/libft.a $(LIBFT)
 
-$(OBJ) :
-	
+compile_bonus :
+	@gcc $(FLAGS) $(SRCS_BONUS) -c
 
-$(OBJ_BONUS) :
+$(OBJS) : $(SRCS)
+	@gcc $(FLAGS) $? -c
 
-
-gen_bricks :
-	@gcc $(FLAGS) $(SRCS) -c
-
-$(NAME) : gen_bricks lib
+$(NAME) : $(OBJS) lib
 	@gcc $(FLAGS) $(OBJS) -o $(NAME) $(LIB)
 	@echo "$(GREEN)pipex ready to be executed.$(NC)"
 
 debug : libft.a
-	@gcc $(FLAGS) -g3 $(SRCS) -o $(NAME) $(LIB)
-	@echo "$(GREEN)pipex ready to be executed.$(NC)"
-
+	@gcc $(FLAGS) $(SRCS) -o $(NAME) $(LIB)
+	@valgrind --leak-check=full ./pipex a a a a
+	
 clean :
-	make -C $(LIBFT_DIR) clean
-	/bin/rm -rf $(OBJS)
-	/bin/rm -rf $(OBJS_BONUS)
+	@make -C $(LIBFT_DIR) clean
+	@/bin/rm -rf $(OBJS)
+	@/bin/rm -rf $(OBJS_BONUS)
 
 fclean : clean
-	make -C $(LIBFT_DIR) fclean
+	@make -C $(LIBFT_DIR) fclean
 	@/bin/rm -rf $(NAME)
 	@/bin/rm -rf $(NAME_BONUS)
 	@/bin/rm -rf $(LIBFT)
@@ -89,5 +89,5 @@ bonus : lib
 	@gcc $(FLAGS) $(SRCS_BONUS) -o $(NAME_BONUS) $(LIB)
 	@echo "$(GREEN)pipex_bonus ready to be executed.$(NC)"
 
-test : re
-	./pipex a a a a
+test : $(NAME)
+	./pipex Makefile cat cat a

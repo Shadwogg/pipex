@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:28:39 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/06 18:37:49 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/07 22:44:11 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,10 @@ int	main(int argc, char **argv, char **env)
 	}
 	if (pipex(cmds, pipes, argc - 3, env) == -1)
 	{
-		free_cmds(cmds, argc - 2);
+		free_cmds(cmds, argc - 4);
 		free_pipes(pipes, argc - 3, in, out);
 		print_error("One command didn't properly executed.", "");
 	}
+	//free_pipes(pipes, argc - 3, in, out);
 	return (0);
 }

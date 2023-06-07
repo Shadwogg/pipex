@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 23:09:41 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/06 17:35:19 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/07 22:40:19 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 */
 t_cmd	**free_cmds(t_cmd **tab, int last)
 {
-	while (--last >= 0)
+	while (last >= 0)
 	{
 		if (tab[last]->in != -1 && tab[last]->in != 0)
 			close(tab[last]->in);
@@ -25,22 +25,29 @@ t_cmd	**free_cmds(t_cmd **tab, int last)
 			close(tab[last]->out);
 		free_tab_str(tab[last]->option);
 		free(tab[last]);
+		last--;
 	}
 	free(tab);
 	return (NULL);
 }
 
-/**
- * Free n elements of the array of string tab
-*/
-char	**free_n_tab(char **tab, size_t n)
+t_cmd	**free_cmd(t_cmd **tab, t_cmd *cmd)
 {
-	while (n > 0)
+	int	ct;
+
+	ct = -1;
+	while (tab[++ct])
 	{
-		free(tab[n]);
-		n--;
+		if (tab[ct] != cmd)
+		{
+			if (tab[ct]->in != -1 && tab[ct]->in != 0)
+				close(tab[ct]->in);
+			if (tab[ct]->out != -1 && tab[ct]->out != 1)
+				close(tab[ct]->out);
+			free_tab_str(tab[ct]->option);
+			free(tab[ct]);
+		}
 	}
-	free(tab[0]);
 	free(tab);
 	return (NULL);
 }

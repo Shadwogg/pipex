@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:28:34 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/06 17:29:41 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/07 22:20:54 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ typedef struct s_proc{
 	struct s_cmd	*cmd;
 }	t_proc;
 
-
 char	*ft_append(char *s1, char *s2, char sep);
 int		ft_open(char *file_in, int *fd);
-int		exec_cmd(t_cmd *cmd, char **env);
+int		exec_cmd(t_cmd *cmd, char **env, t_cmd **cmds);
 
 t_cmd	**init_cmd(char **argv, int size, int in, int out);
 int		init_proc(t_proc *proc, t_cmd *cmd, int **pipe, int p);
@@ -65,6 +64,7 @@ int		wait_childs(int number);
 // FREE
 char	**free_tab_str(char **tab);
 t_cmd	**free_cmds(t_cmd **tab, int ct);
+t_cmd	**free_cmd(t_cmd **tab, t_cmd *cmd);
 char	**free_n_tab(char **tab, size_t n);
 int		**free_pipes(int **tab, int size, int in, int out);
 

@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 18:54:12 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/07 15:16:15 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/07 22:28:55 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_cmd	**init_cmd(char **argv, int size, int in, int out)
 	int		ct;
 	t_cmd	**cmds;
 
-	cmds = malloc((size + 1) * sizeof(t_cmd));
+	cmds = malloc((size + 1) * sizeof(t_cmd *));
 	if (cmds == NULL)
 		return (NULL);
 	cmds[size] = NULL;
@@ -49,7 +49,6 @@ t_cmd	**init_cmd(char **argv, int size, int in, int out)
 
 int	init_proc(t_proc *proc, t_cmd *cmd, int **pipe, int p)
 {
-	//printf("p = %d\n", p);
 	if (!cmd)
 	{
 		print_error("BIZARRE v2\n", "");

@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:18:47 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/06 17:51:30 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/07 22:13:42 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct s_proc{
 	int				status;
 	struct s_cmd	*cmd;
 }	t_proc;
-
 
 char	*ft_append(char *s1, char *s2, char sep);
 int		ft_open(char *file_in, int *fd);
