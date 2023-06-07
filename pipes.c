@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:06:26 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/06 17:51:55 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:06:41 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	**init_pipes(int size, int in, int out)
 	int	ct;
 
 	pipes = malloc((size + 2) * sizeof(int *));
+	//printf("size = %d\n", size);
 	if (pipes == NULL)
 		print_error("", "Malloc error");
 	pipes[size + 1] = NULL;

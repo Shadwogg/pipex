@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 18:54:12 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/06 18:36:41 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:16:15 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,17 @@ t_cmd	**init_cmd(char **argv, int size, int in, int out)
 
 int	init_proc(t_proc *proc, t_cmd *cmd, int **pipe, int p)
 {
+	//printf("p = %d\n", p);
+	if (!cmd)
+	{
+		print_error("BIZARRE v2\n", "");
+		return (-1);
+	}
 	proc->cmd = cmd;
 	if (proc->cmd->in == -1 && proc->cmd->out == -1)
 	{
+		if (pipe[p] == NULL)
+			print_error("BIZARRE\n", "");
 		proc->cmd->in = pipe[p][0];
 		proc->cmd->out = pipe[p][1];
 	}
