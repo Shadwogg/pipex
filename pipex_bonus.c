@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:05:45 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/06 18:07:38 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:19:47 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ int	main(int argc, char **argv, char **env)
 		print_error("Usage : ./pipex infile cmd1 ... cmdx outfile.\n", "");
 	if (pipex_preparse(argc, argv, &in, &out) == -1)
 		print_error("Parsing failed.", "");
-	pipes = init_pipes(argc - 4, in, out);
-	if (pipes == NULL)
+	if (init_pipes(argc - 4, in, out, &pipes) == NULL)
 		print_error("Pipes failed to be initialized.", "");
 	cmds = init_cmd(argv, argc - 3, in, out);
 	if (cmds == NULL)
@@ -96,5 +95,6 @@ int	main(int argc, char **argv, char **env)
 		free_pipes(pipes, argc - 3, in, out);
 		print_error("One command didn't properly executed.", "");
 	}
+	free_cmds(cmds, argc - 4);
 	return (0);
 }

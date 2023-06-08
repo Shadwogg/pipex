@@ -6,7 +6,7 @@
 #    By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/05 17:28:42 by ggiboury          #+#    #+#              #
-#    Updated: 2023/06/07 22:43:23 by ggiboury         ###   ########.fr        #
+#    Updated: 2023/06/08 21:04:40 by ggiboury         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,25 +15,22 @@ SHELL = /bin/sh
 NAME = pipex
 NAME_BONUS = pipex_bonus
 
-SRCS = pipex.c					\
-		ft_cmd_utils.c			\
+SRCS = 	ft_cmd_utils.c			\
 		ft_exec.c				\
 		ft_free.c				\
 		ft_parse.c				\
 		ft_utils.c				\
 		pipes.c
 
-SRCS_BONUS = pipex_bonus.c		\
-		ft_cmd_utils.c			\
-		ft_exec.c				\
-		ft_free.c				\
-		ft_parse.c				\
-		ft_utils.c				\
-		pipes.c
+S_MAIN = pipex.c
+
+S_MAIN_BONUS = pipex_bonus.c
 
 
-OBJS = $(SRCS:.c=.o)
-OBJS_BONUS = $(SRCS_BONUS:.c=.o)
+OBJS_COMMON = $(SRCS:.c=.o)
+
+OBJ_MAIN = $(S_MAIN:.c=.o)
+OBJ_MAIN_BONUS = $(S_MAIN_BONUS:.c=.o)
 
 
 LIBFT_DIR = libft
@@ -58,24 +55,28 @@ $(LIBFT) :
 	@make -C $(LIBFT_DIR)
 	@mv $(LIBFT_DIR)/libft.a $(LIBFT)
 
-compile_bonus :
-	@gcc $(FLAGS) $(SRCS_BONUS) -c
-
-$(OBJS) : $(SRCS)
+$(OBJS_COMMON) : $(SRCS)
 	@gcc $(FLAGS) $? -c
 
-$(NAME) : $(OBJS) lib
-	@gcc $(FLAGS) $(OBJS) -o $(NAME) $(LIB)
+$(OBJ_MAIN) : $(S_MAIN)
+	@gcc $(FLAGS) $? -c
+	
+$(OBJ_MAIN_BONUS) : $(S_MAIN_BONUS)
+	@gcc $(FLAGS) $? -c
+
+$(NAME) : $(OBJS_COMMON) $(OBJ_MAIN) lib
+	@gcc $(FLAGS) $(OBJS_COMMON) $(OBJ_MAIN) -o $(NAME) $(LIB)
 	@echo "$(GREEN)pipex ready to be executed.$(NC)"
 
-debug : libft.a
-	@gcc $(FLAGS) $(SRCS) -o $(NAME) $(LIB)
+debug : $(OBJS_COMMON) $(OBJ_MAIN) lib
+	@gcc $(FLAGS) $(OBJS_COMMON) $(OBJ_MAIN) -o $(NAME) $(LIB)
 	@valgrind --leak-check=full ./pipex a a a a
 	
 clean :
 	@make -C $(LIBFT_DIR) clean
-	@/bin/rm -rf $(OBJS)
-	@/bin/rm -rf $(OBJS_BONUS)
+	@/bin/rm -rf $(OBJS_COMMON)
+	@/bin/rm -rf $(OBJ_MAIN)
+	@/bin/rm -rf $(OBJ_MAIN_BONUS)
 
 fclean : clean
 	@make -C $(LIBFT_DIR) fclean
@@ -85,9 +86,6 @@ fclean : clean
 
 re : fclean $(NAME)
 
-bonus : lib
-	@gcc $(FLAGS) $(SRCS_BONUS) -o $(NAME_BONUS) $(LIB)
+bonus : $(OBJS_COMMON) $(OBJ_MAIN_BONUS) lib
+	@gcc $(FLAGS) $(OBJS_COMMON) $(OBJ_MAIN_BONUS) -o $(NAME_BONUS) $(LIB)
 	@echo "$(GREEN)pipex_bonus ready to be executed.$(NC)"
-
-test : $(NAME)
-	./pipex Makefile cat cat a

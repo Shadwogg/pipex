@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_utils.c                                     :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 23:14:59 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/05 17:28:11 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:48:37 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ int	print_error(char *desc, char *err)
 	if (desc != NULL)
 		ft_putstr_fd(desc, 2);
 	if (errno != 0)
+	{
 		perror(err);
+		exit(errno);
+	}
 	exit(EXIT_FAILURE);
 }
