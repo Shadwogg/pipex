@@ -6,7 +6,7 @@
 /*   By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:28:34 by ggiboury          #+#    #+#             */
-/*   Updated: 2023/06/08 13:44:52 by ggiboury         ###   ########.fr       */
+/*   Updated: 2023/06/10 16:31:33 by ggiboury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,10 @@ int		**free_pipes(int **tab, int size, int in, int out);
 int		close_all(int **pipes);
 int		close_pipes(t_cmd *cmd, int **pipes);
 int		**init_pipes(int size, int in, int out, int ***pipes);
+
+// Split
+int		count_token(char *str);
+char	**pipex_split(char *str, char **arr, int start);
+char	**ft_pipex_split(char *str);
 
 #endif

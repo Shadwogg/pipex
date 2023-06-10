@@ -6,7 +6,7 @@
 #    By: ggiboury <ggiboury@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/05 17:28:42 by ggiboury          #+#    #+#              #
-#    Updated: 2023/06/08 21:04:40 by ggiboury         ###   ########.fr        #
+#    Updated: 2023/06/10 16:43:11 by ggiboury         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS = 	ft_cmd_utils.c			\
 		ft_free.c				\
 		ft_parse.c				\
 		ft_utils.c				\
+		pipex_split.c			\
 		pipes.c
 
 S_MAIN = pipex.c
@@ -38,7 +39,6 @@ LIBFT = ./libft.a
 
 LIB = $(LIBFT)
 FLAGS = -Wall -Werror -Wextra
-CC = gcc
 
 NC=\033[0m
 GREEN=\033[0;32m
@@ -51,7 +51,7 @@ all : $(NAME)
 lib : $(LIBFT)
 
 $(LIBFT) :
-	@echo "Loading libft"
+	@echo "Loading $(BOLD)libft$(NC)"
 	@make -C $(LIBFT_DIR)
 	@mv $(LIBFT_DIR)/libft.a $(LIBFT)
 
@@ -67,25 +67,19 @@ $(OBJ_MAIN_BONUS) : $(S_MAIN_BONUS)
 $(NAME) : $(OBJS_COMMON) $(OBJ_MAIN) lib
 	@gcc $(FLAGS) $(OBJS_COMMON) $(OBJ_MAIN) -o $(NAME) $(LIB)
 	@echo "$(GREEN)pipex ready to be executed.$(NC)"
-
-debug : $(OBJS_COMMON) $(OBJ_MAIN) lib
-	@gcc $(FLAGS) $(OBJS_COMMON) $(OBJ_MAIN) -o $(NAME) $(LIB)
-	@valgrind --leak-check=full ./pipex a a a a
 	
 clean :
 	@make -C $(LIBFT_DIR) clean
 	@/bin/rm -rf $(OBJS_COMMON)
 	@/bin/rm -rf $(OBJ_MAIN)
 	@/bin/rm -rf $(OBJ_MAIN_BONUS)
-
+	@echo ".o files removed."
+	
 fclean : clean
 	@make -C $(LIBFT_DIR) fclean
 	@/bin/rm -rf $(NAME)
 	@/bin/rm -rf $(NAME_BONUS)
 	@/bin/rm -rf $(LIBFT)
+	@echo "All compiled files removed."
 
 re : fclean $(NAME)
-
-bonus : $(OBJS_COMMON) $(OBJ_MAIN_BONUS) lib
-	@gcc $(FLAGS) $(OBJS_COMMON) $(OBJ_MAIN_BONUS) -o $(NAME_BONUS) $(LIB)
-	@echo "$(GREEN)pipex_bonus ready to be executed.$(NC)"
